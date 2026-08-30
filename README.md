@@ -2,7 +2,7 @@
 
 [![CI](https://github.com/wwknow/aivf-ccs/actions/workflows/ci.yml/badge.svg)](https://github.com/wwknow/aivf-ccs/actions/workflows/ci.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Release](https://img.shields.io/badge/release-v0.1.0--alpha.2-orange.svg)](https://github.com/wwknow/aivf-ccs/releases/tag/v0.1.0-alpha.2)
+[![Release](https://img.shields.io/badge/release-v0.1.0--alpha.3-orange.svg)](https://github.com/wwknow/aivf-ccs/releases/tag/v0.1.0-alpha.3)
 
 **Verifiable runtime evidence and fail-closed enforcement for AI agent tool execution.**
 
@@ -15,7 +15,7 @@ AIVF CCS is developed under **AIVF-wwknow**, a **WWKNOW** subproject.
 **[Try the live verifier & demo →](https://aivf.wwknow.com/)** ·
 [Quick Start](QUICKSTART.md) ·
 [Architecture](ARCHITECTURE.md) ·
-[Latest release](https://github.com/wwknow/aivf-ccs/releases/tag/v0.1.0-alpha.2)
+[Latest release](https://github.com/wwknow/aivf-ccs/releases/tag/v0.1.0-alpha.3)
 
 > **Alpha status:** the project is public and runnable, but interfaces may still
 > change before a stable release.

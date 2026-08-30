@@ -1,6 +1,6 @@
 {
   "name": "aivf-ccs",
-  "version": "0.1.0-alpha.2",
+  "version": "0.1.0-alpha.3",
   "description": "AIVF CCS SDK for fail-closed AI agent tool execution and signed runtime evidence",
   "type": "module",
   "main": "./src/index.js",

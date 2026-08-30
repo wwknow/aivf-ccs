@@ -1,4 +1,4 @@
-AIVF CCS v0.1.0-alpha.2
+AIVF CCS v0.1.0-alpha.3
 GitHub target: wwknow/aivf-ccs
 Public site: https://aivf.wwknow.com/
 Receipt namespace: urn:wwknow:aivf:*
