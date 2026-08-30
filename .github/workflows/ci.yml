@@ -1,19 +1,44 @@
 name: CI
+
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   tests:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
-      - uses: actions/setup-node@v4
+          python-version: "3.13"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '22'
-      - run: python -m pip install cryptography
-      - run: ./scripts/secret-scan.sh
-      - run: ./scripts/oss-test-all.sh
+          node-version: "22"
+
+      - name: Install Python test dependency
+        run: python -m pip install cryptography
+
+      - name: Secret scan
+        run: bash scripts/secret-scan.sh
+
+      - name: OSS, namespace, conformance, SDK and verifier tests
+        run: bash scripts/oss-test-all.sh
+
+      - name: Minimal SDK example
+        run: node examples/sdk-minimal.mjs

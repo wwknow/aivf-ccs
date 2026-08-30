@@ -1,6 +1,7 @@
 # Architecture
 
-AIVF CCS is an execution-boundary verification and evidence layer for AI agents.
+AIVF CCS is an execution-boundary verification and signed-evidence layer for AI
+agents.
 
 ```text
 AI Agent / LLM
@@ -9,7 +10,7 @@ AI Agent / LLM
 AIVF CCS SDK
     |
     v
-CCS Verifier
+AIVF CCS Verifier
     |
     +-- Structure
     +-- Schema
@@ -30,13 +31,41 @@ Privileged tool (only after ALLOW)
 
 ## Components
 
-- `ccs-verifier/`: Python reference verifier and durable evidence service.
-- `aivf-ccs-sdk/`: Node.js SDK and fail-closed wrappers.
-- `standards/`: receipt schema and 14 conformance checks.
-- `public-verifier/`: read-only receipt verification web service; no private key access.
-- `examples/agent-demo/`: simulated runtime enforcement demo; never starts a real shell.
-- `examples/public-portal/`: unified portal and public hardening/rate limiting example.
+- `aivf-ccs-verifier/` — Python reference verifier and durable evidence service.
+- `aivf-ccs-sdk/` — Node.js SDK, local guardrail, and fail-closed remote wrapper.
+- `standards/` — receipt schema and 14-point conformance material.
+- `public-verifier/` — read-only receipt verification service; no private-key access.
+- `examples/sdk-minimal.mjs` — smallest governed-function example.
+- `examples/agent-demo/` — simulated runtime enforcement demo; never starts a real shell.
+- `examples/public-portal/` — unified public portal with hardening/rate limiting.
 
 ## Trust boundaries
 
-The signing private key belongs only to the CCS verifier. Public verification needs only the public key. The public verifier and portal must never mount the private seed or the evidence database.
+The signing private key belongs only to the core verifier. Public verification
+requires only the public key. The public verifier and portal must never mount the
+private seed or evidence database.
+
+The remote SDK is fail-closed: verifier timeout, connection failure, malformed
+response, or an explicit non-ALLOW verdict prevents the wrapped privileged tool
+from executing.
+
+## Evidence flow
+
+Admission receipts bind the intended tool invocation before execution. A local
+SDK flow may finalize an admitted receipt after the wrapped tool returns, adding
+a response hash while preserving the original decision context.
+
+The core profile binds the decision to:
+
+```text
+request
+parameters
+runtime context
+configuration
+tool/action
+issuer + audience
+nonce + sequence
+expiry
+seven verification dimensions
+Ed25519 signature
+```
