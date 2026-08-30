@@ -1,0 +1,30 @@
+services:
+  aivf-ccs-verifier:
+    build:
+      context: .
+      dockerfile: deploy/Dockerfile
+    container_name: aivf-ccs-verifier
+    restart: unless-stopped
+    environment:
+      CCS_TRANSPORT: tcp
+      CCS_HOST: 0.0.0.0
+      CCS_PORT: "50051"
+      CCS_HEALTH_HOST: 0.0.0.0
+      CCS_HEALTH_PORT: "8080"
+      CCS_DB: /var/lib/aivf-ccs/evidence.db
+      CCS_KEY_FILE: /var/lib/aivf-ccs/keys/ed25519.seed
+      CCS_ISSUER: ${CCS_ISSUER:-urn:wwknow:aivf:verifier:prod}
+      CCS_AUDIENCE: ${CCS_AUDIENCE:-urn:wwknow:aivf:executor:prod}
+      CCS_KEY_ID: ${CCS_KEY_ID:-aivf-ed25519-1}
+      CCS_TTL: ${CCS_TTL:-30}
+    volumes:
+      - ./data:/var/lib/aivf-ccs
+    ports:
+      - "127.0.0.1:50051:50051"
+      - "127.0.0.1:8080:8080"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz',timeout=2).read()"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

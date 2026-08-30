@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIVF-wwknow · AIVF CCS Receipt Verifier</title>
+  <meta name="description" content="Verify AIVF CCS evidence receipts with the published Ed25519 public key.">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark">C</div>
+        <div>
+          <div class="brand-name">AIVF-wwknow</div>
+          <div class="brand-sub">CCS Receipt Verifier · v0.2</div>
+        </div>
+      </div>
+      <div class="trust-chip"><span class="dot"></span> Independent signature verification</div>
+    </header>
+
+    <section class="hero">
+      <p class="eyebrow">AI RUNTIME EVIDENCE</p>
+      <h1>Verify what the agent was actually authorized to do.</h1>
+      <p class="lede">Paste a CCS evidence receipt. The verifier checks the exact 22-field profile and its Ed25519 signature against the published AIVF CCS verifier public key.</p>
+    </section>
+
+    {% if key_error %}
+      <div class="alert error">Public key unavailable: {{ key_error }}</div>
+    {% endif %}
+
+    <section class="grid">
+      <article class="card input-card">
+        <div class="card-head">
+          <div>
+            <h2>CCS Receipt</h2>
+            <p>Paste JSON or load a local .json file.</p>
+          </div>
+          <label class="file-btn">Load JSON<input id="fileInput" type="file" accept="application/json,.json"></label>
+        </div>
+        <textarea id="receiptInput" spellcheck="false" placeholder='{"trace_id":"...","verdict":"deny", ...}'></textarea>
+        <div class="actions">
+          <button id="verifyBtn" class="primary">Verify receipt</button>
+          <button id="clearBtn" class="secondary">Clear</button>
+        </div>
+      </article>
+
+      <aside class="card key-card">
+        <div class="card-head compact"><div><h2>Verification key</h2><p>Read-only public material</p></div></div>
+        <div class="label">Algorithm</div><div class="value">Ed25519</div>
+        <div class="label">Public key</div><div class="mono break">{{ public_key or 'Unavailable' }}</div>
+        <div class="label">SHA-256 fingerprint</div><div class="mono break">{{ fingerprint }}</div>
+        <div class="boundary">
+          <strong>No private key is present here.</strong>
+          <span>This service can verify evidence. It cannot mint a valid CCS receipt.</span>
+        </div>
+      </aside>
+    </section>
+
+    <section id="resultSection" class="result hidden" aria-live="polite">
+      <div id="resultHeadline" class="result-head"></div>
+      <div class="summary-grid">
+        <div class="metric"><span>Signature</span><strong id="sigMetric">—</strong></div>
+        <div class="metric"><span>Profile</span><strong id="profileMetric">—</strong></div>
+        <div class="metric"><span>Freshness</span><strong id="freshMetric">—</strong></div>
+        <div class="metric"><span>Authorizing now</span><strong id="authMetric">—</strong></div>
+      </div>
+
+      <div class="result-grid">
+        <article class="card">
+          <h2>Evidence details</h2>
+          <div id="details" class="details"></div>
+        </article>
+        <article class="card">
+          <h2>Verification checks</h2>
+          <div id="checks" class="checks"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="explain">
+      <div><span>01</span><h3>Authenticate</h3><p>Verify the Ed25519 signature over the canonical CCS signing payload.</p></div>
+      <div><span>02</span><h3>Bind</h3><p>Inspect tool, action, request, params, context, issuer, audience and configuration bindings.</p></div>
+      <div><span>03</span><h3>Interpret</h3><p>Separate authentic historical evidence from a receipt that is currently fresh and authorizing.</p></div>
+    </section>
+
+    <footer>AIVF-wwknow · AIVF CCS · Public verification does not require the signing private key.</footer>
+  </main>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Runtime state / cryptographic private material
+/data/
+/public/ed25519.pub
+*.seed
+*.key
+*.pem
+*.p12
+*.pfx
+*.sqlite
+*.sqlite3
+*.db
+*.db-wal
+*.db-shm
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+*.secret
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Test/runtime artifacts
+/tmp/
+/test-results/
+/playwright-report/
+.DS_Store
+/.env

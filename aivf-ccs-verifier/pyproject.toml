@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aivf-ccs-verifier"
+version = "0.1.0a2"
+description = "AIVF CCS runtime verifier and signed evidence implementation"
+requires-python = ">=3.10"
+dependencies = ["cryptography>=43"]
+
+[project.scripts]
+aivf-ccs-verifier = "aivf_ccs_verifier.cli:main"
+aivf-ccs-admin = "aivf_ccs_verifier.admin_cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

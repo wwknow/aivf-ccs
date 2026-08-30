@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aivf.wwknow.com/schemas/ccs-receipt-v1.3.json",
+  "title": "CCS v1.3 Evidence Receipt (clean-room reconstruction)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "trace_id",
+    "verdict",
+    "timestamp",
+    "tool",
+    "params_hash",
+    "rule_summary",
+    "verified_at",
+    "block_reason",
+    "request_hash",
+    "response_hash",
+    "runtime_context_hash",
+    "action",
+    "issuer",
+    "audience",
+    "nonce",
+    "sequence",
+    "expires_at",
+    "config_hash",
+    "dimensions",
+    "receipt_status",
+    "key_id",
+    "signature"
+  ],
+  "properties": {
+    "trace_id": {
+      "type": "string",
+      "minLength": 16
+    },
+    "verdict": {
+      "enum": [
+        "allow",
+        "deny",
+        "escalate"
+      ]
+    },
+    "timestamp": {
+      "type": "number"
+    },
+    "tool": {
+      "type": "string",
+      "minLength": 1
+    },
+    "params_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "rule_summary": {
+      "type": "string"
+    },
+    "verified_at": {
+      "type": "number"
+    },
+    "block_reason": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "request_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "response_hash": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "runtime_context_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "action": {
+      "type": "string",
+      "pattern": "^ccs:tool-invoke:"
+    },
+    "issuer": {
+      "type": "string"
+    },
+    "audience": {
+      "type": "string"
+    },
+    "nonce": {
+      "type": "string",
+      "minLength": 16
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "expires_at": {
+      "type": "number"
+    },
+    "config_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "dimensions": {
+      "type": "object",
+      "required": [
+        "structure",
+        "schema",
+        "latency",
+        "cost",
+        "identity",
+        "integrity",
+        "security"
+      ]
+    },
+    "receipt_status": {
+      "enum": [
+        "admission",
+        "finalized",
+        "consumed",
+        "unavailable"
+      ]
+    },
+    "key_id": {
+      "type": "string"
+    },
+    "signature": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{128}$"
+    }
+  }
+}

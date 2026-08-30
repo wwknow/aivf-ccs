@@ -1,0 +1,33 @@
+services:
+  agent-demo:
+    build: .
+    container_name: aivf-ccs-agent-demo
+    restart: unless-stopped
+
+    # Linux host networking is intentional here:
+    # v0.1 CCS Core is frozen and bound to host loopback 127.0.0.1:50051.
+    # The demo must reach that loopback target without modifying v0.1.
+    network_mode: host
+
+    environment:
+      DEMO_HOST: 127.0.0.1
+      DEMO_PORT: "18051"
+      CCS_HOST: 127.0.0.1
+      CCS_PORT: "50051"
+      PUBLIC_VERIFIER_URL: http://127.0.0.1:18050/api/verify
+      DEMO_TIMEOUT: "2.0"
+
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,noexec,nosuid,nodev
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:18051/healthz',timeout=2).read()"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

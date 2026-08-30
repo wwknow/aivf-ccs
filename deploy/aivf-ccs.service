@@ -1,0 +1,22 @@
+[Unit]
+Description=AIVF CCS Verifier
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=aivfccs
+Group=aivfccs
+EnvironmentFile=-/etc/aivf-ccs/ccs.env
+ExecStart=/opt/aivf-ccs/venv/bin/aivf-ccs-verifier
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/aivf-ccs /run/aivf-ccs
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

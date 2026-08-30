@@ -1,0 +1,26 @@
+services:
+  public-verifier:
+    build: .
+    container_name: aivf-ccs-public-verifier
+    restart: unless-stopped
+    environment:
+      CCS_PUBLIC_KEY_PATH: /app/keys/ed25519.pub
+      CCS_MAX_BODY_BYTES: "262144"
+    volumes:
+      - ../public/ed25519.pub:/app/keys/ed25519.pub:ro
+    ports:
+      - "127.0.0.1:18050:8080"
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/healthz', timeout=2).read()"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 5s

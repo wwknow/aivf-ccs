@@ -1,0 +1,7 @@
+AIVF CCS v0.1.0-alpha.2
+GitHub target: wwknow/aivf-ccs
+Public site: https://aivf.wwknow.com/
+Receipt namespace: urn:wwknow:aivf:*
+Node SDK package: aivf-ccs
+Python verifier package: aivf-ccs-verifier
+Fresh deployment: bash scripts/fresh-deploy.sh
