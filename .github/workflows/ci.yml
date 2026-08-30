@@ -40,5 +40,11 @@ jobs:
       - name: OSS, namespace, conformance, SDK and verifier tests
         run: bash scripts/oss-test-all.sh
 
+      - name: Cross-language remote verifier tests
+        run: bash scripts/test-all.sh
+
       - name: Minimal SDK example
         run: node examples/sdk-minimal.mjs
+
+      - name: Real agent integration smoke
+        run: bash scripts/real-agent-integration-smoke.sh

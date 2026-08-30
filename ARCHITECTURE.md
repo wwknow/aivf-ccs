@@ -36,6 +36,7 @@ Privileged tool (only after ALLOW)
 - `standards/` — receipt schema and 14-point conformance material.
 - `public-verifier/` — read-only receipt verification service; no private-key access.
 - `examples/sdk-minimal.mjs` — smallest governed-function example.
+- `examples/real-agent-integration/` — OpenAI-compatible tool-calling agent connected to the remote verifier.
 - `examples/agent-demo/` — simulated runtime enforcement demo; never starts a real shell.
 - `examples/public-portal/` — unified public portal with hardening/rate limiting.
 

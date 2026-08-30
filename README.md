@@ -143,6 +143,29 @@ console.log(receipt.verdict); // allow
 A governed dangerous call is denied before the wrapped function runs. See
 [`examples/sdk-minimal.mjs`](examples/sdk-minimal.mjs).
 
+## Real AI Agent integration
+
+A complete OpenAI-compatible tool-calling integration is included at:
+
+[`examples/real-agent-integration/`](examples/real-agent-integration/)
+
+It connects an agent's tool calls to the **remote AIVF CCS verifier** and proves:
+
+```text
+public HTTPS request      -> ALLOW -> tool executes
+RCE shell intent          -> DENY  -> tool body never runs
+cloud metadata / SSRF     -> DENY  -> HTTP tool body never runs
+credential exfiltration   -> DENY  -> webhook tool body never runs
+```
+
+Run the deterministic integration proof:
+
+```bash
+bash examples/real-agent-integration/run-demo.sh
+```
+
+Or connect an actual OpenAI-compatible model endpoint; see the example README.
+
 ## Receipt namespace
 
 Production receipts use:

@@ -28,7 +28,12 @@ export class RemoteGuardrailProvider {
   constructor(options?:Record<string,unknown>);
   verify(call:ToolCall):Promise<Verification>;
 }
+export interface GovernedRemoteEvidence<U> {
+  output: U;
+  receipt: Record<string,unknown>;
+  verification: Verification;
+}
 export function governRemote<T,U>(
   fn:(params:T)=>Promise<U>|U,
   options?:Record<string,unknown>
-):(params:T,meta?:Record<string,unknown>)=>Promise<U>;
+):(params:T,meta?:Record<string,unknown>)=>Promise<U|GovernedRemoteEvidence<U>>;

@@ -73,6 +73,17 @@ export function governRemote(fn, options={}) {
       e.ccs=v;
       throw e;
     }
-    return await fn(params);
+
+    const output=await fn(params);
+
+    if (options.returnEvidence) {
+      return {
+        output,
+        receipt:v.receipt,
+        verification:v
+      };
+    }
+
+    return output;
   };
 }
